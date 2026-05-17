@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nazeer Dada</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --text: #0a0a0a;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #0a0a0a;
+      --tag-bg: #f3f4f6;
+      --tag-text: #374151;
+      --card-bg: #fafafa;
+      --grid-color: rgba(0,0,0,0.06);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0a0a0a;
+        --text: #f9fafb;
+        --muted: #9ca3af;
+        --border: #1f2937;
+        --accent: #f9fafb;
+        --tag-bg: #1f2937;
+        --tag-text: #d1d5db;
+        --card-bg: #111827;
+        --grid-color: rgba(255,255,255,0.04);
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      background-image:
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+      background-size: 40px 40px;
+      min-height: 100vh;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 2rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    nav .logo {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    nav a {
+      font-size: 0.875rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 5rem;
+    }
+
+    #hero h1 {
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    #hero p {
+      font-size: 1.125rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    #hero .highlight {
+      color: var(--text);
+      font-weight: 500;
+      border-bottom: 2px solid var(--text);
+      padding-bottom: 1px;
+    }
+
+    .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1.25rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+
+    .btn-primary {
+      background: var(--text);
+      color: var(--bg);
+      border: 1px solid var(--text);
+    }
+
+    .btn-primary:hover { opacity: 0.85; }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover { border-color: var(--text); }
+
+    .company-badge {
+      margin-top: 2.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* SECTION LABEL */
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      padding-top: 5rem;
+    }
+
+    /* SKILLS */
+    #skills { padding-bottom: 5rem; }
+
+    .skills-intro {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      max-width: 560px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: border-color 0.2s;
+    }
+
+    .skill-card:hover { border-color: var(--text); }
+
+    .skill-card h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-card p {
+      font-size: 0.825rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    /* EXPERIENCE */
+    #experience { padding-bottom: 5rem; }
+
+    .exp-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .exp-title { font-size: 1.05rem; font-weight: 600; }
+    .exp-company { font-size: 0.875rem; color: var(--muted); margin-top: 0.2rem; }
+    .exp-period {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: var(--tag-bg);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .exp-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .exp-list li {
+      font-size: 0.875rem;
+      color: var(--muted);
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .exp-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--text);
+    }
+
+    /* JOBS */
+    #jobs { padding-bottom: 5rem; }
+
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .job-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: border-color 0.2s;
+    }
+
+    .job-card:hover { border-color: var(--text); }
+
+    .job-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.35rem; }
+    .job-location { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.75rem; font-family: 'JetBrains Mono', monospace; }
+    .job-match {
+      font-size: 0.75rem;
+      color: #16a34a;
+      font-weight: 500;
+    }
+
+    /* ABOUT */
+    #about { padding-bottom: 5rem; }
+
+    .about-text {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 620px;
+    }
+
+    .about-text strong { color: var(--text); font-weight: 500; }
+
+    /* CONTACT */
+    #contact { padding-bottom: 8rem; }
+
+    .contact-heading {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.875rem;
+    }
+
+    .contact-link span.label {
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      min-width: 80px;
+    }
+
+    .contact-link a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+    }
+
+    .contact-link a:hover { border-color: var(--text); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      max-width: 860px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#hero" class="logo">Nazeer Dada</a>
+    <ul>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Erfahrung</a></li>
+      <li><a href="#jobs">Jobs</a></li>
+      <li><a href="#contact">Kontakt</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- HERO -->
+    <section id="hero">
+      <h1>Nazeer Dada</h1>
+      <p>
+        IT-Administration, <span class="highlight">Prozessautomatisierung</span> mit n8n,
+        Buchhaltung und digitale Infrastruktur —
+        ich verbinde Technik mit Büroorganisation und bringe Prozesse auf das nächste Level.
+      </p>
+      <div class="btn-group">
+        <a href="#experience" class="btn btn-primary">Meine Erfahrung →</a>
+        <a href="#contact" class="btn btn-secondary">Kontakt aufnehmen</a>
+      </div>
+      <p class="company-badge">mamsolarbau GmbH · IT & Verwaltung</p>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <p class="section-label">· 01 / skills.json</p>
+      <p class="skills-intro">
+        Ein breites Spektrum an Fähigkeiten — von der IT-Infrastruktur bis zur automatisierten
+        Buchhaltung und Rechtsvertretung.
+      </p>
+      <div class="skills-grid">
+
+        <div class="skill-card">
+          <h3>IT-Administration & Netzwerk</h3>
+          <p>Aufbau und Verwaltung der gesamten IT-Landschaft und Netzwerkinfrastruktur im Unternehmen.</p>
+          <div class="tags">
+            <span class="tag">Windows Server</span>
+            <span class="tag">Netzwerk</span>
+            <span class="tag">IT-Support</span>
+            <span class="tag">Firewall</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3>Prozessautomatisierung</h3>
+          <p>Automatisierte Rechnungsstellung und Baustellen-Berichte mit n8n — vollständig ohne manuelle Eingriffe.</p>
+          <div class="tags">
+            <span class="tag">n8n</span>
+            <span class="tag">Workflow</span>
+            <span class="tag">API</span>
+            <span class="tag">Automatisierung</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3>Buchhaltung & Rechnungsstellung</h3>
+          <p>Vollständige Buchhaltung, Rechnungen erstellen und Angebote schreiben für Kunden und Bauprojekte.</p>
+          <div class="tags">
+            <span class="tag">Buchhaltung</span>
+            <span class="tag">Rechnungen</span>
+            <span class="tag">Angebote</span>
+            <span class="tag">DATEV</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3>Webentwicklung</h3>
+          <p>Unternehmenswebsite entwickelt und gepflegt — von Design bis Deployment.</p>
+          <div class="tags">
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">CMS</span>
+            <span class="tag">WordPress</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3>Mobile Device Management</h3>
+          <p>Verwaltung aller mobilen Unternehmensgeräte — Einrichtung, Sicherheit, Updates.</p>
+          <div class="tags">
+            <span class="tag">MDM</span>
+            <span class="tag">iOS/Android</span>
+            <span class="tag">Intune</span>
+            <span class="tag">BYOD</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3>Kundenbetreuung & Recht</h3>
+          <p>Kundenterminierung, Kommunikation sowie Rechtsvertretung bei Versicherungs- und Unfallschäden.</p>
+          <div class="tags">
+            <span class="tag">Kundenkontakt</span>
+            <span class="tag">Terminplanung</span>
+            <span class="tag">Versicherung</span>
+            <span class="tag">Schriftverkehr</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <p class="section-label">· 02 / erfahrung.md</p>
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <p class="exp-title">IT & Verwaltung · Allrounder</p>
+            <p class="exp-company">mamsolarbau GmbH · Photovoltaik & Baubranche</p>
+          </div>
+          <span class="exp-period">2022 – heute</span>
+        </div>
+        <ul class="exp-list">
+          <li>Aufbau und Betrieb der gesamten IT-Landschaft (Netzwerk, Server, Clients)</li>
+          <li>Automatisierte Rechnungsstellung mit n8n — spart hunderte Arbeitsstunden jährlich</li>
+          <li>Automatische Baustellen-Berichte: Daten erfassen, verarbeiten, versenden</li>
+          <li>Vollständige Buchhaltung, Angebotserstellung und Rechnungslegung</li>
+          <li>Unternehmenswebsite entwickelt und gewartet</li>
+          <li>Mobile Geräte aller Mitarbeiter verwaltet (MDM)</li>
+          <li>Rechtsvertretung bei Versicherungen und Unfallschäden</li>
+          <li>Kundenkontakt, Terminvergabe und Kommunikation</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- JOBS -->
+    <section id="jobs">
+      <p class="section-label">· 03 / jobangebote.json</p>
+      <p class="skills-intro" style="margin-bottom: 2rem;">
+        Offen für neue Herausforderungen im Raum <strong style="color: var(--text);">Augsburg / Mering</strong>
+        sowie in der weiteren Region Bayern.
+      </p>
+      <div class="jobs-grid">
+
+        <div class="job-card">
+          <p class="job-title">IT-Systemadministrator</p>
+          <p class="job-location">📍 Augsburg / Mering</p>
+          <div class="tags" style="margin-bottom: 0.75rem;">
+            <span class="tag">Netzwerk</span>
+            <span class="tag">Server</span>
+            <span class="tag">Support</span>
+          </div>
+          <p class="job-match">✓ Starke Übereinstimmung</p>
+        </div>
+
+        <div class="job-card">
+          <p class="job-title">Prozessautomatisierungs-Spezialist</p>
+          <p class="job-location">📍 Augsburg / Remote</p>
+          <div class="tags" style="margin-bottom: 0.75rem;">
+            <span class="tag">n8n</span>
+            <span class="tag">RPA</span>
+            <span class="tag">Workflow</span>
+          </div>
+          <p class="job-match">✓ Starke Übereinstimmung</p>
+        </div>
+
+        <div class="job-card">
+          <p class="job-title">Office Manager mit IT-Schwerpunkt</p>
+          <p class="job-location">📍 Mering / Friedberg</p>
+          <div class="tags" style="margin-bottom: 0.75rem;">
+            <span class="tag">Buchhaltung</span>
+            <span class="tag">IT</span>
+            <span class="tag">Organisation</span>
+          </div>
+          <p class="job-match">✓ Sehr gute Übereinstimmung</p>
+        </div>
+
+        <div class="job-card">
+          <p class="job-title">ERP / Digitalisierungsberater</p>
+          <p class="job-location">📍 Augsburg / Hybrid</p>
+          <div class="tags" style="margin-bottom: 0.75rem;">
+            <span class="tag">ERP</span>
+            <span class="tag">Digitalisierung</span>
+            <span class="tag">Prozesse</span>
+          </div>
+          <p class="job-match">✓ Gute Übereinstimmung</p>
+        </div>
+
+        <div class="job-card">
+          <p class="job-title">Bürokaufmann mit IT (m/w/d)</p>
+          <p class="job-location">📍 Kissing / Augsburg</p>
+          <div class="tags" style="margin-bottom: 0.75rem;">
+            <span class="tag">Verwaltung</span>
+            <span class="tag">Finanzen</span>
+            <span class="tag">IT</span>
+          </div>
+          <p class="job-match">✓ Sehr gute Übereinstimmung</p>
+        </div>
+
+        <div class="job-card">
+          <p class="job-title">IT-Koordinator / Helpdesk</p>
+          <p class="job-location">📍 Augsburg / München</p>
+          <div class="tags" style="margin-bottom: 0.75rem;">
+            <span class="tag">1st/2nd Level</span>
+            <span class="tag">MDM</span>
+            <span class="tag">Support</span>
+          </div>
+          <p class="job-match">✓ Gute Übereinstimmung</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <p class="section-label">· 04 / about.md</p>
+      <p class="about-text">
+        Ich bin <strong>Nazeer Dada</strong>, ein vielseitiger IT- und Verwaltungsprofi mit Sitz im Raum
+        <strong>Augsburg / Mering</strong>. Bei mamsolarbau habe ich eigenverantwortlich eine vollständige
+        IT-Infrastruktur aufgebaut, Arbeitsprozesse automatisiert und dabei die Buchhaltung mitgeführt.<br /><br />
+        Meine Stärke liegt in der Kombination von <strong>technischem Know-how</strong> und
+        <strong>kaufmännischem Verständnis</strong> — ich denke ganzheitlich und setze Lösungen von
+        der Planung bis zum Betrieb um. Ich suche eine neue Stelle, in der ich diese breiten Fähigkeiten
+        einbringen und weiterentwickeln kann.
+      </p>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <p class="section-label">· 05 / contact</p>
+      <h2 class="contact-heading">Lass uns in Kontakt treten.</h2>
+      <p class="about-text">
+        Offen für spannende Positionen im Raum Augsburg / Mering und Umgebung.
+        Gerne melde ich mich zeitnah zurück.
+      </p>
+      <div class="contact-links">
+        <div class="contact-link">
+          <span class="label">E-Mail</span>
+          <a href="mailto:nasirdada.98@gmail.com">nasirdada.98@gmail.com</a>
+        </div>
+        <div class="contact-link">
+          <span class="label">LinkedIn</span>
+          <a href="https://www.linkedin.com/in/nazeer-dada-332a35201/" target="_blank">linkedin.com/in/nazeer-dada</a>
+        </div>
+        <div class="contact-link">
+          <span class="label">Region</span>
+          <span style="color: var(--text);">Augsburg · Mering · Bayern</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>built with HTML & CSS &nbsp;·&nbsp; © 2026 — Nazeer Dada</p>
+  </footer>
+
+</body>
+</html>
